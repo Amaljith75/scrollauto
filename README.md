@@ -14,6 +14,14 @@ Android app (Flutter + Kotlin) that scrolls **Instagram Reels** and **YouTube Sh
 2. Open **Releases → "ScrollAuto (latest build)"** and download `scrollauto.apk`.
 3. Install it. Allow "install unknown apps" for your browser if asked.
 
+### "App blocked to protect your device" (Play Protect)
+
+In India (and some other countries), Play Protect blocks any app installed from a browser or file manager if it uses an Accessibility service. ScrollAuto needs one to swipe, so the block can't be avoided in code. To install it:
+
+1. Play Store → your profile picture → **Play Protect** → ⚙️ → turn off **Scan apps with Play Protect**. This can't be changed during a phone call.
+2. Install `scrollauto.apk`.
+3. Turn **Scan apps with Play Protect** back on.
+
 ## First-time setup
 
 1. Open ScrollAuto and tap **Enable service**. Turn on *ScrollAuto* under Accessibility → Installed apps.
