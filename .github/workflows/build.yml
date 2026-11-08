@@ -1,0 +1,71 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      # The repo only holds our own source files. This generates the rest of the
+      # Android project (gradle files, launcher icons, styles). Existing files
+      # are NOT overwritten.
+      - name: Generate Android scaffolding
+        run: flutter create --platforms=android --org com.amaljith --project-name scrollauto .
+
+      # Same signing key on every build, so new APKs install over old ones.
+      - name: Use fixed signing key
+        run: |
+          mkdir -p ~/.android
+          cp android-ci/debug.keystore ~/.android/debug.keystore
+
+      - run: flutter pub get
+
+      - name: Build release APK
+        run: |
+          set -o pipefail
+          flutter build apk --release 2>&1 | tee build.log
+          cp build/app/outputs/flutter-apk/app-release.apk scrollauto.apk
+
+      - name: Show build errors
+        if: failure()
+        run: |
+          if [ -f build.log ]; then
+            msg=$(grep -E "^e: |error:|Error:|What went wrong|FAILURE|Exception" -A4 build.log | head -n 60 \
+              | sed -e 's/%/%25/g' -e 's/\r//g' | sed ':a;N;$!ba;s/\n/%0A/g')
+            echo "::error title=Build failed::${msg}"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scrollauto-apk
+          path: scrollauto.apk
+
+      - name: Publish to "latest" release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete latest --yes --cleanup-tag || true
+          gh release create latest scrollauto.apk \
+            --title "ScrollAuto (latest build)" \
+            --notes "Built from ${GITHUB_SHA::7}. Download scrollauto.apk below and install it." \
+            --prerelease --target "$GITHUB_SHA"
