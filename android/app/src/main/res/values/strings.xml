@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="accessibility_label">ScrollAuto</string>
-    <string name="accessibility_description">ScrollAuto watches the Instagram Reels and YouTube Shorts player so it can swipe to the next video when the current one ends, or when you make a hand gesture. It only acts inside Instagram and YouTube and does not collect or send any data.</string>
+    <string name="accessibility_label">Doom</string>
+    <string name="accessibility_description">Doom watches the Instagram Reels and YouTube Shorts player so it can swipe to the next video when the current one ends, or when you make a hand gesture. It only acts inside Instagram and YouTube and does not collect or send any data.</string>
 </resources>

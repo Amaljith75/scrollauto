@@ -10,7 +10,7 @@
     <uses-feature android:name="android.hardware.sensor.proximity" android:required="false" />
 
     <application
-        android:label="ScrollAuto"
+        android:label="Doom"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round">

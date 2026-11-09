@@ -1,4 +1,4 @@
-# ScrollAuto
+# Doom
 
 Android app (Flutter + Kotlin) that scrolls **Instagram Reels** and **YouTube Shorts** for you:
 
@@ -11,23 +11,23 @@ Android app (Flutter + Kotlin) that scrolls **Instagram Reels** and **YouTube Sh
 ## Install (from your phone)
 
 1. Every push to `main` builds the app with GitHub Actions.
-2. Open **Releases → "ScrollAuto (latest build)"** and download `scrollauto.apk`.
+2. Open **Releases → "Doom (latest build)"** and download `doom.apk`.
 3. Install it. Allow "install unknown apps" for your browser if asked.
 
 ### "App blocked to protect your device" (Play Protect)
 
-In India (and some other countries), Play Protect blocks any app installed from a browser or file manager if it uses an Accessibility service. ScrollAuto needs one to swipe, so the block can't be avoided in code. To install it:
+In India (and some other countries), Play Protect blocks any app installed from a browser or file manager if it uses an Accessibility service. Doom needs one to swipe, so the block can't be avoided in code. To install it:
 
 1. Play Store → your profile picture → **Play Protect** → ⚙️ → turn off **Scan apps with Play Protect**. This can't be changed during a phone call.
-2. Install `scrollauto.apk`.
+2. Install `doom.apk`.
 3. Turn **Scan apps with Play Protect** back on.
 
 ## First-time setup
 
-1. Open ScrollAuto and tap **Enable service**. Turn on *ScrollAuto* under Accessibility → Installed apps.
+1. Open Doom and tap **Enable service**. Turn on *Doom* under Accessibility → Installed apps.
 2. If the toggle is greyed out ("Restricted setting", Android 13+ for sideloaded apps), go to **App info → ⋮ → Allow restricted settings** and try again.
 3. Optional: pick a gesture mode. A small notification stays visible while the gesture listener is running.
-4. Open Reels or Shorts. The status line in ScrollAuto shows what it's detecting.
+4. Open Reels or Shorts. The status line in Doom shows what it's detecting.
 
 ## How it works
 

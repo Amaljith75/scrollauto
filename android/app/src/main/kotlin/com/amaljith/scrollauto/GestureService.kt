@@ -138,7 +138,7 @@ class GestureService : Service(), SensorEventListener {
             Notification.Builder(this)
         }
         val notification = builder
-            .setContentTitle("ScrollAuto")
+            .setContentTitle("Doom")
             .setContentText(text)
             .setSmallIcon(android.R.drawable.ic_menu_view)
             .setContentIntent(openApp)
@@ -155,7 +155,7 @@ class GestureService : Service(), SensorEventListener {
                 return true
             } catch (t: Throwable) {
                 // e.g. Android 14 refuses camera FGS when restarted from the background.
-                status = "Open ScrollAuto once to re-enable the camera"
+                status = "Open Doom once to re-enable the camera"
             }
         }
         if (Build.VERSION.SDK_INT >= 34) {

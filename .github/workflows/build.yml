@@ -43,7 +43,7 @@ jobs:
         run: |
           set -o pipefail
           flutter build apk --release 2>&1 | tee build.log
-          cp build/app/outputs/flutter-apk/app-release.apk scrollauto.apk
+          cp build/app/outputs/flutter-apk/app-release.apk doom.apk
 
       - name: Show build errors
         if: failure()
@@ -57,7 +57,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: scrollauto-apk
-          path: scrollauto.apk
+          path: doom.apk
 
       - name: Publish to "latest" release
         if: github.event_name != 'pull_request'
@@ -65,7 +65,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh release delete latest --yes --cleanup-tag || true
-          gh release create latest scrollauto.apk \
-            --title "ScrollAuto (latest build)" \
-            --notes "Built from ${GITHUB_SHA::7}. Download scrollauto.apk below and install it." \
+          gh release create latest doom.apk \
+            --title "Doom (latest build)" \
+            --notes "Built from ${GITHUB_SHA::7}. Download doom.apk below and install it." \
             --prerelease --target "$GITHUB_SHA"

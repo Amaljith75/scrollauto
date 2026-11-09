@@ -15,7 +15,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Toast
 
 /**
- * Core of ScrollAuto.
+ * Core of Doom.
  *
  * Every [TICK_MS] it inspects the foreground window. When Instagram Reels or
  * YouTube Shorts is showing it looks for the player's progress bar
@@ -119,8 +119,12 @@ class ScrollAccessibilityService : AccessibilityService() {
                 lastEvent = "Gesture ignored – open Reels or Shorts"
                 return@post
             }
-            swipe(next, reason)
+            if (swipe(next, reason)) Prefs.recordSwipe(this, gesture = true)
         }
+    }
+
+    private fun autoSwipe(reason: String) {
+        if (swipe(true, reason)) Prefs.recordSwipe(this, gesture = false)
     }
 
     /** Swipe regardless of which app is open (used by the in-app test). */
@@ -135,7 +139,7 @@ class ScrollAccessibilityService : AccessibilityService() {
             lastEvent = if (paused) "Paused" else "Resumed"
             Toast.makeText(
                 this,
-                if (paused) "ScrollAuto paused" else "ScrollAuto resumed",
+                if (paused) "Doom paused" else "Doom resumed",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -191,9 +195,9 @@ class ScrollAccessibilityService : AccessibilityService() {
             lastProgress = p
             when {
                 // Video looped back to the start -> it ended.
-                prev >= 0.75f && p < prev - 0.5f -> swipe(true, "Reel ended (looped)")
+                prev >= 0.75f && p < prev - 0.5f -> autoSwipe("Reel ended (looped)")
                 // Video is at the very end.
-                p >= END_FRACTION && prev >= 0f -> swipe(true, "Reel ended")
+                p >= END_FRACTION && prev >= 0f -> autoSwipe("Reel ended")
                 else -> lastEvent = "Watching – ${(p * 100).toInt()}%"
             }
             return
@@ -203,7 +207,7 @@ class ScrollAccessibilityService : AccessibilityService() {
         if (fallback > 0) {
             val elapsed = (t - reelStartedAt) / 1000
             if (elapsed >= fallback) {
-                swipe(true, "Timer ($fallback s)")
+                autoSwipe("Timer ($fallback s)")
             } else {
                 lastEvent = "No progress bar – timer ${elapsed}/${fallback}s"
             }
